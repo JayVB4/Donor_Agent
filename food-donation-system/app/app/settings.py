@@ -22,12 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY= "_$)$4#1l&t(kkmwtg7=ak4)z@jhih*jj)rvh&a73kq5hz%yo08"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','127.0.0.1' ]
 ALLOWED_HOSTS.extend(
     filter(
         None,
@@ -35,19 +36,36 @@ ALLOWED_HOSTS.extend(
     )
 )
 
-if DEBUG:
-    CORS_ALLOW_ALL_ORIGINS = True
-else:
-    CORS_ALLOWED_ORIGINS = [
+
+
+
+
+CORS_ALLOWED_ORIGINS = [
         "http://127.0.0.1:3000",
-        "https://food-donation-new.web.app",
-        "https://fooddonation.amalbabudev.in",
-        "http://onshopweb.web.app",
-        "https://api.fooddonation.amalbabudev.in",
-        "https://*.amalbabudev.in",
+      
     ]
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS"
+]
+DEBUG = True
+
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+    "x-requested-with",
+]
+
 CSRF_TRUSTED_ORIGINS = [
     'https://api.fooddonation.amalbabudev.in/', 'https://*.amalbabudev.in/', 'https://*.amazonaws.com', 'http://*.amalbabudev.in']
 
@@ -62,7 +80,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'rest_framework.authtoken',
     'rest_framework',
     'corsheaders',
     'djoser',
@@ -71,9 +89,15 @@ INSTALLED_APPS = [
     'donar',
     'agent',
 
+    'dj_rest_auth',  # ✅ Make sure this is installed
+    'allauth',
+    'allauth.account',
+    'dj_rest_auth.registration',  # Required for user registration
 ]
 
 MIDDLEWARE = [
+    'allauth.account.middleware.AccountMiddleware',
+        'corsheaders.middleware.CorsMiddleware',  # Add this line
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -108,16 +132,27 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'HOST' : 'localhost',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD':'postgres',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.environ.get('DB_HOST'),
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASS'),
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'admin123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -161,8 +196,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = "ulqh vejv nlqy tgcb"
+EMAIL_HOST_PASSWORD = "ulqh vejv nlqy tgcb"
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
