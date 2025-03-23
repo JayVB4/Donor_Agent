@@ -102,6 +102,7 @@ const Register = () => {
 				setLoading(false);
 				console.log('err', err);
 				toast.error('something went wrong.', { hideProgressBar: true });
+				console.error("Registration failed!", err.response?.data || err.message);
 			});
 	};
 	
